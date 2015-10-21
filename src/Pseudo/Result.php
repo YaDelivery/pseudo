@@ -56,7 +56,7 @@ class Result
      */
     public function nextRow()
     {
-        $row = (isset($this->rows[$this->rowOffset])) ? $this->rows[$this->rowOffset] : null;
+        $row = $this->rows[$this->rowOffset];
         if ($row) {
             $this->rowOffset++;
             return $row;

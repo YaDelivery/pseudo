@@ -7,7 +7,7 @@ class Pdo extends \PDO
     private $inTransaction = false;
     private $queryLog;
 
-    public function prepare($statement, $driver_options = [])
+    public function prepare($statement, $driver_options = null)
     {
         $result = $this->mockedQueries->getResult($statement);
         $statement = new PdoStatement($result);
@@ -127,9 +127,9 @@ class Pdo extends \PDO
     /**
      * @param ResultCollection $collection
      */
-    public function __construct(ResultCollection $collection = null)
+    public function __construct($dsn, $username, $passwd, $options)
     {
-        $this->mockedQueries = $collection ?: new ResultCollection();
+        $this->mockedQueries = new ResultCollection();
         $this->queryLog = new QueryLog();
     }
 

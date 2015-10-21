@@ -82,7 +82,7 @@ class PdoStatement extends \PDOStatement
         return false;
     }
 
-    public function fetchAll($fetch_style = \PDO::FETCH_BOTH, $fetch_argument = null, $ctor_args = 'array()')
+    public function fetchAll($fetch_style = null, $fetch_argument = null, $ctor_args = 'array()')
     {
         $rows = $this->result->getRows();
         $returnArray = [];
@@ -94,7 +94,6 @@ class PdoStatement extends \PDOStatement
 
     private function proccessFetchedRow($row, $fetchMode)
     {
-		$i = 0;
         switch ($fetchMode ?: $this->fetchMode) {
             case \PDO::FETCH_BOTH:
                 $returnRow = [];
@@ -132,6 +131,9 @@ class PdoStatement extends \PDOStatement
                     return true;
                 }
                 break;
+            case \PDO::FETCH_COLUMN:
+                $returnRow = array_values($row);
+                return $returnRow[0];
         }
         return null;
     }
@@ -141,7 +143,7 @@ class PdoStatement extends \PDOStatement
      * @param array|null $ctor_args
      * @return bool|mixed
      */
-    public function fetchObject($class_name = "stdClass", $ctor_args = null)
+    public function fetchObject($class_name = null, $ctor_args = null)
     {
         $row = $this->result->nextRow();
         if ($row) {
@@ -191,7 +193,7 @@ class PdoStatement extends \PDOStatement
      */
     public function setFetchMode($mode, $params = null)
     {
-        $r = new \ReflectionClass(new Pdo());
+        $r = new \ReflectionClass(new Pdo('', '', '', []));
         $constants = $r->getConstants();
         $constantNames = array_keys($constants);
         $allowedConstantNames = array_filter($constantNames, function($val) {
