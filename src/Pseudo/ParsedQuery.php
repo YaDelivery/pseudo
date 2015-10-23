@@ -41,4 +41,12 @@ class ParsedQuery
     {
         return $this->rawQuery;
     }
+
+    /**
+     * @return array
+     */
+    public function getParsedQuery()
+    {
+        return $this->parsedQuery;
+    }
 }

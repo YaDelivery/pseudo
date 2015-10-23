@@ -36,6 +36,10 @@ class ResultCollection implements \Countable
         if (!($query instanceof ParsedQuery)) {
             $query = new ParsedQuery($query);
         }
+        $parsedQuery = $query->getParsedQuery();
+        if (isset($parsedQuery['INSERT']) || isset($parsedQuery['UPDATE'])) {
+            return new Result();
+        }
         if (!isset($this->queries[$query->getHash()])) {
             throw new \Exception('Mock is not specified for query: ' . $query->getRawQuery());
         }
