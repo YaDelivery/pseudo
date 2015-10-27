@@ -1,5 +1,5 @@
 {
-    "name": "YaDelivery/pseudo",
+    "name": "yadelivery/pseudo",
     "description": "PDO/MySQL Connection Mocking",
     "license": "MIT",
     "authors": [
