@@ -121,7 +121,10 @@ class Pdo extends \PDO
 
     public function quote($string, $parameter_type = PDO::PARAM_STR)
     {
-        // not yet implemented
+        if (is_int($string) || is_float($string)) {
+            return $string;
+        }
+        return "'" . addcslashes(str_replace("'", "''", $string), "\000\n\r\\\032") . "'";
     }
 
     /**
